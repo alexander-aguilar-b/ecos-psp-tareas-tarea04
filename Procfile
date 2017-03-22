@@ -1,1 +1,1 @@
-web:    java -cp target/PSPProgram4-1.0-SNAPSHOT.jar uniandes.ecos.psp.PSPProgram4
+web:    java -cp target/psp.jar uniandes.ecos.psp.PSPProgram4
