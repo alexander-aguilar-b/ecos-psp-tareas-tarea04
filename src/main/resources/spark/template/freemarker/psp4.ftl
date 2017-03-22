@@ -3,7 +3,7 @@
 <body>
 
 <div class="container">
-  <h2>PSP4 - Cálculo de Tamaño Relativo</h2>
+  <h2>PSP4 - Calculo de Tama&ntilde;o Relativo</h2>
   <h3>Datos de Entrada</h3>
     <ul>
     <#list entradas as x>

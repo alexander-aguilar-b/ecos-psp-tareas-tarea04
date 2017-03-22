@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import static spark.SparkBase.port;
+
+
 import static spark.Spark.*;
 /**
  *
@@ -25,43 +28,42 @@ public class PSPProgram4 {
     public static void main(String[] args)
     {
 
-        //port(9013);
+        port(9020);
 
         Map<String, Object> attributes = new HashMap<>();
 
-        get("/psp4", (req, res) -> {
+
+         get("/psp4", (req, res) -> {
 
                     ArrayList<String> salida = new ArrayList<String>();
+
+                    try {
 
                         ControladorEstadistica controladorEstadistica = new ControladorEstadistica();
                         ModeloTamanioRelativo modeloTamanioRelativo = controladorEstadistica.calcularTamanioRelativo();
 
-                        salida.add("***********************************************<br/>");
-                        salida.add("Datos de Entrada<br/>");
-                        salida.add("***********************************************<br/>");
-
+                        ArrayList<String> datosEntrada = new ArrayList<String>();
                         if (modeloTamanioRelativo.getDatosEntrada() != null) {
                             for (Double item : modeloTamanioRelativo.getDatosEntrada()) {
-                                salida.add(item.toString() + "<br/>");
+                                datosEntrada.add(item.toString());
                             }
                         }
 
-                        salida.add("***********************************************<br/>");
-                        salida.add("Resultados Tamaño Relativo:<br/>");
-                        salida.add("***********************************************<br/>");
-                        salida.add("VS: " + modeloTamanioRelativo.getTamanioVS() + "<br/>");
-                        salida.add("S : " + modeloTamanioRelativo.getTamanioS() + "<br/>");
-                        salida.add("M : " + modeloTamanioRelativo.getTamanioM() + "<br/>");
-                        salida.add("L : " + modeloTamanioRelativo.getTamanioL() + "<br/>");
-                        salida.add("VL: " + modeloTamanioRelativo.getTamanioVL() + "<br/>");
+                        attributes.put("entradas", datosEntrada);
+                        attributes.put("tamanioVS", modeloTamanioRelativo.getTamanioVS());
+                        attributes.put("tamanioS", modeloTamanioRelativo.getTamanioS());
+                        attributes.put("tamanioM", modeloTamanioRelativo.getTamanioM());
+                        attributes.put("tamanioL", modeloTamanioRelativo.getTamanioL());
+                        attributes.put("tamanioVL", modeloTamanioRelativo.getTamanioVL());
+                        return new ModelAndView(attributes, "psp4.ftl");
 
-                        //attributes.put("results", salida);
-                        //return new ModelAndView(attributes, "db.ftl");
-
-                        return salida.toString();
+                    }
+                    catch (Exception e) {
+                        attributes.put("message", "There was an error: " + e);
+                        return new ModelAndView(attributes, "error.ftl");
                     }
 
-
+                }, new FreeMarkerEngine()
         );
 
     }
