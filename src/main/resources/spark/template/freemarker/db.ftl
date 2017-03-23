@@ -4,7 +4,7 @@
 
 <div class="container">
 
-  <h1>Tamañio Relativo</h1>
+  <h2>Tamañio Relativo</h2>
     <ul>
     <#list results as x>
       <li> ${x} </li>

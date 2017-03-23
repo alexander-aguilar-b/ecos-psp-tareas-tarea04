@@ -28,7 +28,8 @@ public class PSPProgram4 {
     public static void main(String[] args)
     {
 
-        port(9020);
+        //port(9020);
+        port(Integer.valueOf(System.getenv("PORT")));
 
         Map<String, Object> attributes = new HashMap<>();
 
