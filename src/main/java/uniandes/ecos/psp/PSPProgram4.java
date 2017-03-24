@@ -11,10 +11,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
 import static spark.SparkBase.port;
-
-
 import static spark.Spark.*;
 /**
  *
@@ -23,15 +20,14 @@ import static spark.Spark.*;
 public class PSPProgram4 {
 
     /**
+     * Metodo de inicio del programa
      * @param args the command line arguments
      */
     public static void main(String[] args)
     {
-        //port(9027);
-        port(Integer.valueOf(System.getenv("PORT")));
-
+        Integer puerto = System.getenv("PORT") != null ? Integer.valueOf(System.getenv("PORT")) : 4567;
+        port(puerto);
         get("/psp4/test1", (req, res) -> obtenerCalculoTamanioRelativo("Data.txt", "LOC/Metodos"), new FreeMarkerEngine());
-
         get("/psp4/test2", (req, res) -> obtenerCalculoTamanioRelativo("Data2.txt", "Pags/Capitulos") , new FreeMarkerEngine());
     }
 
