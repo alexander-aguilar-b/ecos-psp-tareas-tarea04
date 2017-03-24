@@ -27,46 +27,53 @@ public class PSPProgram4 {
      */
     public static void main(String[] args)
     {
-
-        //port(9020);
+        //port(9027);
         port(Integer.valueOf(System.getenv("PORT")));
 
-        Map<String, Object> attributes = new HashMap<>();
+        get("/psp4/test1", (req, res) -> obtenerCalculoTamanioRelativo("Data.txt", "LOC/Metodos"), new FreeMarkerEngine());
 
-
-         get("/psp4", (req, res) -> {
-
-                    ArrayList<String> salida = new ArrayList<String>();
-
-                    try {
-
-                        ControladorEstadistica controladorEstadistica = new ControladorEstadistica();
-                        ModeloTamanioRelativo modeloTamanioRelativo = controladorEstadistica.calcularTamanioRelativo();
-
-                        ArrayList<String> datosEntrada = new ArrayList<String>();
-                        if (modeloTamanioRelativo.getDatosEntrada() != null) {
-                            for (Double item : modeloTamanioRelativo.getDatosEntrada()) {
-                                datosEntrada.add(item.toString());
-                            }
-                        }
-
-                        attributes.put("entradas", datosEntrada);
-                        attributes.put("tamanioVS", modeloTamanioRelativo.getTamanioVS());
-                        attributes.put("tamanioS", modeloTamanioRelativo.getTamanioS());
-                        attributes.put("tamanioM", modeloTamanioRelativo.getTamanioM());
-                        attributes.put("tamanioL", modeloTamanioRelativo.getTamanioL());
-                        attributes.put("tamanioVL", modeloTamanioRelativo.getTamanioVL());
-                        return new ModelAndView(attributes, "psp4.ftl");
-
-                    }
-                    catch (Exception e) {
-                        attributes.put("message", "There was an error: " + e);
-                        return new ModelAndView(attributes, "error.ftl");
-                    }
-
-                }, new FreeMarkerEngine()
-        );
-
+        get("/psp4/test2", (req, res) -> obtenerCalculoTamanioRelativo("Data2.txt", "Pags/Capitulos") , new FreeMarkerEngine());
     }
 
+    /**
+     * Metodo que obtiene la vista con loos resultados del calculo de tamaño relativo
+     * @param nombreArchivoDatos Nombre del archivo que se va a utilizar para realizar la prueba
+     * @param etiquetaDatosEntrada Etiqueta de los datos de entrada
+     * @return Vista con los resultados de los calculos
+     */
+    private static ModelAndView obtenerCalculoTamanioRelativo(String nombreArchivoDatos, String etiquetaDatosEntrada)
+    {
+        Map<String, Object> atributosSalida = new HashMap<>();
+
+        try
+        {
+            ControladorEstadistica controladorEstadistica = new ControladorEstadistica();
+            controladorEstadistica.setNombreArchivo(nombreArchivoDatos);
+            ModeloTamanioRelativo modeloTamanioRelativo = controladorEstadistica.calcularTamanioRelativo();
+
+            ArrayList<String> datosEntrada = new ArrayList<String>();
+
+            if (modeloTamanioRelativo.getDatosEntrada() != null)
+            {
+                for (Double item : modeloTamanioRelativo.getDatosEntrada())
+                {
+                    datosEntrada.add(item.toString());
+                }
+            }
+
+            atributosSalida.put("entradas", datosEntrada);
+            atributosSalida.put("tamanioVS", modeloTamanioRelativo.getTamanioVS());
+            atributosSalida.put("tamanioS", modeloTamanioRelativo.getTamanioS());
+            atributosSalida.put("tamanioM", modeloTamanioRelativo.getTamanioM());
+            atributosSalida.put("tamanioL", modeloTamanioRelativo.getTamanioL());
+            atributosSalida.put("tamanioVL", modeloTamanioRelativo.getTamanioVL());
+            atributosSalida.put("etiquetaDatosEntrada", etiquetaDatosEntrada);
+        }
+        catch (Exception e)
+        {
+            atributosSalida.put("message", "There was an error: " + e);
+        }
+
+        return new ModelAndView(atributosSalida, "psp4.ftl");
+    }
 }

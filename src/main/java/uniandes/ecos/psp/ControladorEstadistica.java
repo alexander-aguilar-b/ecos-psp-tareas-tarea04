@@ -20,6 +20,8 @@ public class ControladorEstadistica
      * ruta del archivo que contiene los datos
      */
     String rutaArchivo;
+    String nombreArchivo;
+
 
     VistaEntrada vistaEntrada;
     VistaSalida vistaSalida;
@@ -32,6 +34,11 @@ public class ControladorEstadistica
     {
         vistaEntrada = new VistaEntrada();
         vistaSalida = new VistaSalida();
+    }
+
+    public void setNombreArchivo(String nombreArchivo)
+    {
+        this.nombreArchivo = nombreArchivo;
     }
 
     /***
@@ -63,7 +70,9 @@ public class ControladorEstadistica
     public ModeloTamanioRelativo calcularTamanioRelativo() throws Exception
     {
         String rutaBase = new File("").getAbsolutePath();
-        rutaArchivo = rutaBase.concat("/resources/testdata/Data.txt");
+        nombreArchivo = nombreArchivo.isEmpty() ? "Data.txt" : nombreArchivo;
+        //rutaArchivo = rutaBase.concat("/resources/testdata/Data.txt");
+        rutaArchivo = rutaBase.concat("/resources/testdata/" + nombreArchivo);
         System.out.println(rutaArchivo);
         ManejadorArchivo manejadorArchivo = new ManejadorArchivo();
         datosEntrada = manejadorArchivo.obtenerDatosArchivo(rutaArchivo);
