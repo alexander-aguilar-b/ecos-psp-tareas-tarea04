@@ -12,6 +12,10 @@ INSTRUCCIONES PARA DESCARGAR EL PROYECTO DESDE GITHUB Y EJECUTARLO LOCALMENTE
 4-Abrir una ventana de comandos de windows dentro de la carpeta descomprimida en el paso anterior (por ejemplo en C:\Users\edgaguil\Downloads\ecos-psp-tareas-tarea04-master)
 5-Ejecutar el comando: mvn package
 6-Ejecutar el comando: java -cp target/psp.jar uniandes.ecos.psp.PSPProgram4
+7-Para validar el Test1(Loc/Methods) de PSP4 acceder a la siguiente URL de la aplicacion despligada localmente:
+	http://localhost:4567/psp4/test1
+8-Para validar el Test2(Pags/Chanpers) de PSP4 acceder a la siguiente URL de la aplicacion despligada localmente:	
+	http://localhost:4567/psp4/test2
 *********************************************************************************************************************************************************		  
 HEROKU
 *********************************************************************************************************************************************************
